@@ -2,7 +2,9 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// https://vitejs.dev/config/
 export default defineConfig({
+  base: process.env.NODE_ENV === 'production' ? '/pocket-ledger-ai/' : '/',
   plugins: [
     react(),
     VitePWA({
@@ -11,8 +13,8 @@ export default defineConfig({
       manifest: {
         name: 'PocketLedger AI',
         short_name: 'PocketLedger',
-        description: '100% Offline Personal Finance & Local AI Expense Tracker',
-        theme_color: '#faf5ee',
+        description: '100% Offline Personal Finance PWA with Dual-Engine AI and Active Learning',
+        theme_color: '#c2652a',
         background_color: '#faf5ee',
         display: 'standalone',
         icons: [
@@ -27,6 +29,9 @@ export default defineConfig({
             type: 'image/png'
           }
         ]
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,wasm,json}']
       }
     })
   ],
@@ -34,6 +39,7 @@ export default defineConfig({
     format: 'es'
   },
   build: {
-    target: 'esnext'
+    target: 'esnext',
+    outDir: 'dist'
   }
 });
